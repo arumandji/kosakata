@@ -68,7 +68,7 @@ function filterAndRender() {
     renderVocabularies();
 }
 
-// Fungsi utama untuk merender daftar kosakata ke HTML
+
 // Fungsi utama untuk merender daftar kosakata ke HTML
 function renderVocabularies() {
     const searchKeyword = document.getElementById("searchInput").value.toLowerCase();
@@ -88,12 +88,12 @@ function renderVocabularies() {
     // 2. Filter tambahan berdasarkan kata kunci pencarian (Search Input)
     if (searchKeyword.trim() !== "") {
         filtered = filtered.filter(item => {
-            return (
-                item.jp.toLowerCase().includes(searchKeyword) ||
-                item.romaji.toLowerCase().includes(searchKeyword) ||
-                item.arti.toLowerCase().includes(searchKeyword) ||
-                (item.kanji && item.kanji.toLowerCase().includes(searchKeyword))
-            );
+            const jpMatch = item.jp && item.jp.toLowerCase().includes(searchKeyword);
+            const romajiMatch = item.romaji && item.romaji !== "undefined" && item.romaji.toLowerCase().includes(searchKeyword);
+            const artiMatch = item.arti && item.arti.toLowerCase().includes(searchKeyword);
+            const kanjiMatch = item.kanji && item.kanji.toLowerCase().includes(searchKeyword);
+            
+            return jpMatch || romajiMatch || artiMatch || kanjiMatch;
         });
     }
 
@@ -121,4 +121,28 @@ function renderVocabularies() {
         `;
         container.innerHTML += cardHTML;
     });
+
+    // Tambahkan baris ini di baris paling bawah script.js kamu
+    document.getElementById("searchInput").addEventListener("input", filterAndRender);
 }
+
+    // Fitur Dark Mode Toggle
+const darkModeToggle = document.getElementById("darkModeToggle");
+
+// Cek apakah pengguna sebelumnya sudah mengaktifkan dark mode
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    darkModeToggle.textContent = "☀️";
+}
+
+darkModeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    
+    if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("theme", "dark");
+        darkModeToggle.textContent = "☀️";
+    } else {
+        localStorage.setItem("theme", "light");
+        darkModeToggle.textContent = "🌙";
+    }
+});
