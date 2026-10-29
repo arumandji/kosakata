@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kamus Kosakata Jepang - Minna no Nihongo</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -35,11 +36,14 @@
         .search-box {
             width: 100%;
             padding: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 14px;
             box-sizing: border-box;
+        }
+        .filter-container {
+            margin-bottom: 15px;
         }
         .vocab-card {
             background: #fafafa;
@@ -79,18 +83,92 @@
 <body>
 
     <div class="container">
-        <h1>🇯🇵 Kosakata Jepang</h1>
-        <p class="subtitle">Persiapan Berangkat ke Jepang 🚀</p>
+        <h1>Kosakata Jepang</h1>
+        <p class="subtitle">Semangat belajarnyaaa, katanya mau ke Jepang</p>
 
         <!-- Kolom Pencarian -->
-        <input type="text" id="searchInput" class="search-box" placeholder="Cari kosakata..." onkeyup="renderVocab()">
+        <input type="text" id="searchInput" class="search-box" placeholder="Cari kosakata (arti, romaji, atau kanji)..." onkeyup="filterAndRender()">
+        
+        <!-- Bagian Filter Bab (Dropdown) -->
+        <div class="filter-container">
+            <label for="babFilter" style="font-weight: 600; font-size: 13px; margin-right: 10px;">Pilih Bab:</label>
+            <select id="babFilter" onchange="onDropdownChange()" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc; width: 100%; max-width: 250px;">
+                <option value="ALL">Semua Bab (1 - 25)</option>
+            </select>
+        </div>
+
+        <!-- Deretan Tombol (Pill Buttons) -->
+        <div id="babButtons" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px;">
+            <button onclick="filterByBab('ALL')" class="bab-btn" data-bab="ALL" style="padding: 6px 14px; border-radius: 20px; border: 1px solid #d9534f; background: #d9534f; color: white; cursor: pointer; white-space: nowrap; font-size: 13px;">Semua</button>
+        </div>
 
         <!-- Tempat Kosakata Muncul Otomatis -->
         <div id="vocabList"></div>
     </div>
 
-    <!-- Panggil file JavaScript eksternal -->
+    <!-- Panggil file data kosakata -->
     <script src="vocab.js"></script>
+    <!-- Panggil file logika JavaScript utama -->
+    <script src="script.js"></script>
 
+    <!-- Maskot Kucing Mengambang di Pojok Kanan Bawah -->
+    <div class="floating-mascot">
+        <img src="kucing3.png" alt="Maskot Kucing Ganbatte" style="width: 110px; height: auto;">
+    </div>
+
+    <style>
+        /* Posisi dan Animasi Mengambang */
+        .floating-mascot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            cursor: pointer;
+            user-select: none;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+            animation: floatUpDown 2.5s ease-in-out infinite;
+            transition: transform 0.3s;
+        }
+
+        /* Efek pas kursor mendekat */
+        .floating-mascot:hover {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        /* Keyframes Gerakan Naik-Turun Halus */
+        @keyframes floatUpDown {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Styling Tambahan untuk Layout Kartu Kosakata */
+    .vocab-card {
+        display: flex;
+        align-items: center; /* Membuat nomor dan teks sejajar di tengah secara vertikal */
+        background: #fafafa;
+        border-left: 5px solid #d9534f;
+        padding: 12px 15px;
+        margin-bottom: 12px;
+        border-radius: 4px;
+        transition: transform 0.2s;
+    }
+    .vocab-number {
+        font-size: 13px;
+        color: #888;
+        font-weight: 500;
+        width: 35px; /* Lebar tetap supaya sejajar rapi ke bawah */
+        flex-shrink: 0;
+    }
+    </style>
+
+    <!-- Footer Web Kamus -->
+    <footer style="text-align: center; margin-top: 40px; padding: 20px 0; color: #888; font-size: 12px; border-top: 1px solid #eee;">
+        <p>&copy; 2026 Yuro Arumandji. All rights reserved.</p>
+        <p>Licensed under the <a href="LICENSE" target="_blank" style="color: #d9534f; text-decoration: none;">MIT License</a>.</p>
+    </footer>
 </body>
 </html>
