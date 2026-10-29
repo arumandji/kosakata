@@ -110,11 +110,8 @@ function renderVocabularies() {
         let kanjiText = item.kanji ? ` ${item.kanji}` : "";
         let romajiText = (item.romaji && item.romaji !== "undefined") ? `${item.romaji} — ` : "";
         
-        let nomorUrut = item.no ? `${item.no}.` : `${index + 1}.`;
-
         let cardHTML = `
             <div class="vocab-card">
-                <div class="vocab-number">${nomorUrut}</div>
                 <div style="flex-grow: 1;">
                     <div class="jp">${item.jp}${kanjiText}</div>
                     <div class="romaji">${romajiText}<strong>${item.arti}</strong></div>
