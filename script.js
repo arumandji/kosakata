@@ -110,7 +110,11 @@ function renderVocabularies() {
     let html = "";
     filtered.forEach((item, index) => {
         let romajiDisplay = (item.romaji && item.romaji !== "undefined" && item.romaji.trim() !== "") ? `(${item.romaji})` : '';
-        let kanjiDisplay = (item.kanji && item.kanji !== "undefined" && item.kanji.trim() !== "") ? item.kanji : '';
+        
+        // Kanji diberi warna merah dan hanya tampil jika datanya valid
+        let kanjiDisplay = (item.kanji && item.kanji !== "undefined" && item.kanji.trim() !== "" && item.kanji !== "-") 
+            ? `<span style="color: #d9534f; margin-left: 6px; font-weight: bold;">${item.kanji}</span>` 
+            : '';
 
         html += `
             <div class="vocab-card">

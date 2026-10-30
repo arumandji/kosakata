@@ -292,6 +292,10 @@ body.dark-mode .vocab-card .jp {
     color: #ffffff;
 }
 
+body.dark-mode .vocab-card .jp span {
+    color: #48cae4  !important; /* Warna merah cerah yang kontras dengan mode gelap */
+}
+
 body.dark-mode .vocab-card .romaji {
     color: #ade8f4 !important;
     font-weight: 600;
